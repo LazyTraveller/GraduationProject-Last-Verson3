@@ -1,0 +1,15 @@
+[
+    { 
+        "textarea" : "皮质",
+        "types" : { 
+           "type": "补胶",  
+            "extent": [
+               { "degree":"轻度补胶", "money":"30" },
+               { "degree":"中度补胶", "money":"50" },
+               { "degree":"重度补胶", "money":"60" }
+            ]
+        },
+        "money": "30",
+        "images": "url"
+    }
+]

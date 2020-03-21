@@ -1,0 +1,29 @@
+[
+    { 
+        "types": "补胶",  
+        "extent": [
+            { "degree":"轻度补胶", "money":"30" },
+            { "degree":"中度补胶", "money":"50" },
+            { "degree":"重度补胶", "money":"60" }
+        ]
+    },
+
+    {
+        "types": "修改图案",  
+        "extent": [
+        ]
+    },
+    { 
+        "types": "补漆",  
+        "extent": [
+            { "degree":"轻度补漆", "money":"30" },
+            { "degree":"中度补漆", "money":"50" },
+            { "degree":"重度补漆", "money":"60" }
+        ]
+    },
+    {
+        "types": "去氧化",  
+        "extent": [
+        ]
+    }
+]
