@@ -68,11 +68,11 @@ export default [
         name: 'ApplicationBox',
         routes: [
           //申请零食盒子
-          {
-            path: '/ApplicationBox/AddApplicationBox',
-            name: 'AddApplicationBox',
-            component: './ApplicationBox/AddApplicationBox',
-          },
+          // {
+          //   path: '/ApplicationBox/AddApplicationBox',
+          //   name: 'AddApplicationBox',
+          //   component: './ApplicationBox/AddApplicationBox',
+          // },
            //申请零食盒子的列表
           {
             path: '/ApplicationBox/ApplicationBoxList',
@@ -94,11 +94,11 @@ export default [
             component: './ShortageRemind/ShortageRemindTab',
           },
           // 添加缺货提醒
-          {
-            path: '/ShortageRemind/AddShortageRemind',
-            name: 'AddShortageRemind',
-            component: './ShortageRemind/AddShortageRemind',
-          },
+          // {
+          //   path: '/ShortageRemind/AddShortageRemind',
+          //   name: 'AddShortageRemind',
+          //   component: './ShortageRemind/AddShortageRemind',
+          // },
         ],
       },
       // 宿舍二维码管理
@@ -108,11 +108,11 @@ export default [
         icon: 'border-right',
         routes: [
           // 添加二维码与宿舍绑定
-          {
-            path: '/QrcodeManager/AddQrcode',
-            name: 'AddQrcode',
-            component: './QrcodeManager/AddQrcode',
-          },
+          // {
+          //   path: '/QrcodeManager/AddQrcode',
+          //   name: 'AddQrcode',
+          //   component: './QrcodeManager/AddQrcode',
+          // },
           // 查看所有宿舍二维码绑定
           {
             path: '/QrcodeManager/QrcodeList',
@@ -128,17 +128,51 @@ export default [
         icon: 'shopping-cart',
         routes: [
           // 添加订单
-          {
-            path: '/SnackOrderManager/AddSnackOrder',
-            name: 'AddSnackOrder',
-            component: './SnackOrderManager/AddSnackOrder',
-          },
+          // {
+          //   path: '/SnackOrderManager/AddSnackOrder',
+          //   name: 'AddSnackOrder',
+          //   component: './SnackOrderManager/AddSnackOrder',
+          // },
           // 查看所有订单
           {
             path: '/SnackOrderManager/SnackOrderList',
             name: 'SnackOrderList',
             component: './SnackOrderManager/SnackOrderList',
           },
+        ],
+      },
+      {
+        name: 'integralaccount',
+        icon: 'credit-card',
+        path: '/integralaccount',
+        routes: [
+          //会员积分管理
+          {
+            path: '/integralaccount/integral',
+            name: 'integral',
+            component: './IntegralAccount/IntegralAccountList'
+          },
+          // 会员充值记录
+          {
+            path: '/integralaccount/MemberRecharge',
+            name: 'MemberRecharge',
+            component: './IntegralAccount/MemberRechargeList'
+          },
+         
+        ],
+      },
+      {
+        name: 'integralgoods',
+        icon: 'gift',
+        path: '/integralgoods',
+        routes: [
+          //积分商品管理
+          {
+            path: '/integralgoods/goods',
+            name: 'goods',
+            component: './Profile/BasicProfile'
+          },
+         
         ],
       },
       //管理员信息
@@ -179,40 +213,7 @@ export default [
          
         ],
       },
-      {
-        name: 'integralaccount',
-        icon: 'credit-card',
-        path: '/integralaccount',
-        routes: [
-          //会员积分管理
-          {
-            path: '/integralaccount/integral',
-            name: 'integral',
-            component: './IntegralAccount/IntegralAccountList'
-          },
-          // 会员充值记录
-          {
-            path: '/integralaccount/MemberRecharge',
-            name: 'MemberRecharge',
-            component: './IntegralAccount/MemberRechargeList'
-          },
-         
-        ],
-      },
-      {
-        name: 'integralgoods',
-        icon: 'gift',
-        path: '/integralgoods',
-        routes: [
-          //积分商品管理
-          {
-            path: '/integralgoods/goods',
-            name: 'goods',
-            component: './Profile/BasicProfile'
-          },
-         
-        ],
-      },
+      
       {
         component: '404',
       },

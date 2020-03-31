@@ -49,7 +49,7 @@ export default class PiaChartModal extends React.PureComponent {
           onCancel={this.onClickHide}
           onOk={this.onClickHide}
           footer={null}
-          width="60%"
+          width="75%"
           maskClosable={false}
         >{typeof pieChartData === 'object' ? (
           <Fragment>
@@ -77,6 +77,7 @@ export default class PiaChartModal extends React.PureComponent {
                   legend: {
                     orient: 'vertical',
                     left: 'left',
+                    type: "scroll",
                     data: it.legend,
                     // selectedMode: false,
                   },

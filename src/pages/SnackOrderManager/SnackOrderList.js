@@ -5,6 +5,7 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { easyRouteTo } from '../../utils/easyDispatch';
 import getQrcodeColumns from './SnackOrderTable'
 import PiaChartModal from './modals/PiaChartModal';
+import { isNull } from 'util';
 
 function newColumn(title, dataIndex, render = undefined) {
   return { title, dataIndex, render, key: dataIndex }
@@ -53,6 +54,7 @@ class SnackOrderList extends Component{
     this.state = {
       error: '',
       formValues: {},
+      pagination: {},
     }
   }
 
@@ -141,22 +143,49 @@ class SnackOrderList extends Component{
 
   
 
-  query() {
+  query( params = {}) {
+    console.warn('param', params)
     this.clearError();
     const { dispatch } = this.props;
+    if (Object.keys(params).length === 0) {
+      params.results = 10;
+      params.page = 1;
+    }
     dispatch({
       type: 'snackorder/fetchSnacksOrderList',
+      payload: { ...params }
     });
   }
 
   clearError() { this.setState({ error: '' }); }
 
+  handleTableChange = (pagination, filter, sorter) => {
+    const pager = { ...this.state.pagination };
+    pager.current = pagination.current;
+    this.setState({
+      pagination: pager
+    });
+    this.query({
+      results: pagination.pageSize,
+      page: pagination.current,
+      sortField: sorter.field,
+      sorterOrder: sorter.order,
+      ...filter
+    });
+  }
+
 
   render() {
     const {loading ,snackorder, isSaving, form } = this.props;
-    const { error, dormitory } = this.state;
+    const { error, dormitory, pagination } = this.state;
     const showSnacksOrderList = Array.isArray(snackorder.showSnacksOrderList) > 0 ? snackorder.showSnacksOrderList : [];
- 
+    let count = _.get(showSnacksOrderList[0], 'count');
+    if(count === 0) {
+      count = showSnacksOrderList.length
+    }
+    console.warn('count', count)
+    pagination.total = count;
+
     const getSancks = [];
     let  bigSancksFamily = [];
     let SancksStr = '';
@@ -255,14 +284,15 @@ class SnackOrderList extends Component{
 
     return (
       <PageHeaderWrapper title="" content={content} loading={isSaving} extraContent="">
-        <Card bordered={false} title={<span><Icon type="unordered-list" />已完成零食订单列表---{showSnacksOrderList.length}条</span>} error={error} extra={extra}>
+        <Card bordered={false} title={<span><Icon type="unordered-list" />已完成零食订单列表</span>} error={error} extra={extra}>
           {renderOrderFilter}
           <Table
             loading={loading}
             columns={tableColumns}
             rowKey={record => record.uuid}
             dataSource={showSnacksOrderList}
-            pagination={{"defaultPageSize":10, showQuickJumper: true }}
+            pagination={pagination}
+            onChange={this.handleTableChange}
             size="middle"
             expandedRowRender={record => <div><p>订单编号：{record.uuid}</p><br /><p>微信openid：{record.openid ? record.openid: <span>无</span> }</p></div>}
             components={this.components}

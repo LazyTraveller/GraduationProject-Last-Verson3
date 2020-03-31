@@ -5,8 +5,13 @@ import { urlencoded } from '@/utils/urlencoded';
 
 
 //  零食订单列表
-export async function SnacksOrderList() {
-    return request('/snackstest/Snacks_Order/GetAll_Snacks_Order_Bypage?pages=1&number=10', { method:'POST'});
+export async function SnacksOrderList(params) {
+    console.warn('sanck services ', params)
+    // if(isNull(params)) {
+    //     params.results = 10;
+    //     params.page = 1;
+    //   }
+    return request(`/snackstest/Snacks_Order/GetAll_Snacks_Order_Bypage?pages=${params.page}&number=${params.results}`, { method:'POST'});
 
 }
 
@@ -31,5 +36,10 @@ export async function GetSnacksOrderBydormitory(values) {
 // 查询最近7天的订单和金额
 export async function GetSelectByEveryDay() {
     return request(`/snackstest/Snacks_Order/select_by_everyday`);
+}
+
+// 零食分类统计
+export async function GetSnacksClassifStatistics() {
+    return request(`/snackstest/Census/GetAllCensus?adminUserid=1`)
 }
 

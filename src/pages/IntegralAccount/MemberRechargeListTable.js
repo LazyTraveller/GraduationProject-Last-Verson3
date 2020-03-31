@@ -23,7 +23,8 @@ function newColumn(title, dataIndex, render = undefined ) {
 }
 
 function getApplyColumns(props, eventHandler) {
-    const { onMarkApply, onEditSubmit, clearError ,GetApplyEdit } = eventHandler;
+    const { onDeleteMemberRecharge, clearError } = eventHandler;
+    // console.warn('eventHandler',eventHandler)
     const isDeal = {
         false: '已处理',
         true: '未处理',
@@ -81,17 +82,17 @@ function getApplyColumns(props, eventHandler) {
                         onClick={GetApplyEdit.bind(this,_.get(it, 'uuid', ''))}
                       ><Icon type="edit" />&nbsp;&nbsp;编辑&nbsp;&nbsp;&nbsp;</a>
                     </EditApplyModal> */}
-                    {/* <Popconfirm
-                      title={<span>确认删除<b>{it.name}</b>的申请吗？</span>} 
+                    <Popconfirm
+                      title={<span>确认删除<b>{it.wechaName}</b>吗？</span>} 
                       okType="danger"
-                      onConfirm={eventHandler.onDeleteApply.bind(null, it)}
+                      onConfirm={onDeleteMemberRecharge.bind(null, it)}
                       okText="确实删除"
                       cancelText="取消"
                     >
                       <a style={{ color: '#FC1E39', marginLeft: 20 }}>
                         <Icon type="delete" />&nbsp;删除
                       </a>
-                    </Popconfirm> */}
+                    </Popconfirm>
                   </Fragment>
                 );
             }

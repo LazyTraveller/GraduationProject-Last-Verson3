@@ -6,7 +6,7 @@ import request from '@/utils/request';
 
 //  二维码绑定列表
 export async function QrcodeList() {
-    return request('/snackstest/Qrcode/GetAll_QrcodeListBypages?pages=1&number=10', { method:'POST'});
+    return request('/snackstest/Qrcode/GetAll_QrcodeListBypages');
 
 }
 

@@ -23,13 +23,13 @@ export async function SnackDelete(uuid) {
   }
 
   // 获取编辑的零食
-export async function GetsnackstestWithUUID(uuid) {
+export async function GetSnacksWithUUID(uuid) {
    
     return request(`/snackstest/Goods/get_Goods?uuid=${uuid}`);
   }
 
   // 提交编辑好零食
-export async function snackstestUpdate(values) {
+export async function SnacksUpdate(values) {
     
     const body = _.pick(values, "uuid","name", "money","classify_uuid","images");
    

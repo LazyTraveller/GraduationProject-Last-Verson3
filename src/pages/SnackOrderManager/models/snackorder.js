@@ -23,8 +23,9 @@ export default {
 
   effects: {
     // 获取零食订单列表
-    *fetchSnacksOrderList(_, { call, put }) {
-      const response = yield call(services.SnacksOrderList);
+    *fetchSnacksOrderList({ payload }, { call, put }) {
+      console.warn('sanch models', payload)
+      const response = yield call(services.SnacksOrderList, payload);
       yield put({
         type: 'SnacksOrderList',
         payload: response,

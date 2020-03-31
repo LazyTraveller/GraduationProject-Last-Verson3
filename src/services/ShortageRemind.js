@@ -6,7 +6,7 @@ import request from '@/utils/request';
 
 //  缺货提醒或者零食推荐列表
 export async function RemindList() {
-    return request('/snackstest/Advise/Get_All_Advise?pages=1&number=10&status=1&remind=零食推荐 ', { method:'POST'});
+    return request('/snackstest/Advise/Get_All_Advise');
 
 }
 

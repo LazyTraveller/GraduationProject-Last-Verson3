@@ -1,8 +1,9 @@
 import { message } from 'antd';
+import { SnacksOrderList, GetSelectByEveryDay, GetSnacksClassifStatistics } from '@/services/snackorder';
 import { ApplyList } from '../../../services/ApplicationBox';
 import { RemindList } from '../../../services/ShortageRemind';
 import { QrcodeList } from '../../../services/qrcode';
-import { SnacksOrderList, GetSelectByEveryDay } from '@/services/snackorder';
+
 
 export default {
   namespace: 'home',
@@ -13,6 +14,7 @@ export default {
     Qrcodelist: [],
     orderList: [],
     EveryDayData: [],
+    SnacksStatistics: []
     
   },
 
@@ -59,6 +61,14 @@ export default {
       type: 'EveryDayData',
       payload: response,
     });
+  },
+
+  *fetchSnacksStatistics(_, { call, put }) {
+    const response = yield call(GetSnacksClassifStatistics);
+    yield put({
+      type: 'SnacksStatistics',
+      payload: response,
+    });
   }
 
   
@@ -97,6 +107,13 @@ export default {
       return {
         ...state,
         EveryDayData: payload,
+      }
+    },
+
+    SnacksStatistics(state, { payload }) {
+      return {
+        ...state,
+        SnacksStatistics: payload,
       }
     }
 

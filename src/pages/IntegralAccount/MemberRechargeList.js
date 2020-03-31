@@ -19,12 +19,23 @@ class MemberRechargeList extends Component{
     this.state = {
       error: '',
       formValues: {},
-      current: 1,
-      pageSize: 10,
+      pagination: {},
     }
   }
 
   componentDidMount() {
+    this.query();
+  }
+
+  onDeleteMemberRecharge(it) {
+    if (!it) return;
+    this.clearError();
+    // console.warn('itititi', it)
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'IntegralAccount/fetchInvestMemberDelete',
+      payload: { uuid: it.id },
+    });
     this.query();
   }
 
@@ -40,15 +51,16 @@ class MemberRechargeList extends Component{
     e.preventDefault();
     const { form, dispatch } = this.props;
     form.validateFields((err, fieldsValues) => {
+      console.warn('fieldsValues', fieldsValues)
       if (err) return;
-      if (fieldsValues.address === undefined) {
-        this.query();
-      }
+      // if (fieldsValues.address === undefined) {
+      //   this.query();
+      // }
       this.setState({
         formValues: { ...fieldsValues },
       });
       dispatch({
-        type: 'IntegralAccount/fetchMemberRechargeList',
+        type: 'IntegralAccount/fetchInvestMember',
         payload: { ...fieldsValues }
       });
     }); 
@@ -59,33 +71,43 @@ class MemberRechargeList extends Component{
   }
 
 
-  query() {
+  query(params = {}) {
+    // console.warn('MemberRechargeList', params)
     this.clearError();
     const { dispatch } = this.props;
+    if (Object.keys(params).length === 0) {
+      params.results = 10;
+      params.page = 1;
+    }
     dispatch({
       type: 'IntegralAccount/fetchMemberRechargeList',
-       payload: { page: this.state.current, number: this.state.pageSize  }
+       payload: { ...params }
     })
   }
 
   clearError() { this.setState({ error: ''})}
 
-  onShowSizeChange = (current, pageSize) => {
-    console.warn(current, pageSize);
-    this.setState(function(){
-      return {
-        pageSize: pageSize,
-        current: current
-      }
+  handleTableChange = (pagination, filter, sorter) => {
+    const pager = { ...this.state.pagination };
+    pager.current = pagination.current;
+    this.setState({
+      pagination: pager
     });
-    this.query();
+    this.query({
+      results: pagination.pageSize,
+      page: pagination.current,
+      sortField: sorter.field,
+      sorterOrder: sorter.order,
+      ...filter
+    });
   }
 
   render() {
     const { isSaving, IntegralAccount, loading,form } = this.props;
-    const { error } = this.state;
+    const { error, pagination } = this.state;
     const listData = Array.isArray(IntegralAccount.MemberRechargeList) > 0 ? IntegralAccount.MemberRechargeList : [];
     const count = _.get(listData[0], 'count');
+    pagination.total = count;
     // console.warn('count', _.get(listData[0], 'count'))
     
     // let count = 0;
@@ -105,6 +127,7 @@ class MemberRechargeList extends Component{
       { IntegralAccount },
       { 
         clearError: this.clearError.bind(this),
+        onDeleteMemberRecharge: this.onDeleteMemberRecharge.bind(this)
       }
     );
 
@@ -122,12 +145,21 @@ class MemberRechargeList extends Component{
       <Form onSubmit={this.handleSearch} layout='horizontal' style={{ marginBottom: 30}}>
         <Row gutter={16}>
           <Col md={6} sm={24}>
-            <Form.Item label="宿舍号筛选">
-              {form.getFieldDecorator('address', {
+            <Form.Item label="电话筛选">
+              {form.getFieldDecorator('phone', {
                 rules: [
-                  { message: '请输入需要查询的宿舍号'}
+                  { message: '请输入需要查询的电话'}
                 ]
-              })(<Input placeholder="宿舍号关键字" />)}
+              })(<Input placeholder="电话关键字" />)}
+            </Form.Item>
+          </Col>
+          <Col md={6} sm={24}>
+            <Form.Item label="微信名称筛选">
+              {form.getFieldDecorator('wechatName', {
+                rules: [
+                  { message: '请输入需要查询的微信名称'}
+                ]
+              })(<Input placeholder="微信名称关键字" />)}
             </Form.Item>
           </Col>
           {submitText}
@@ -139,25 +171,26 @@ class MemberRechargeList extends Component{
  
     return (
        <PageHeaderWrapper title="" content='' loading={isSaving} extraContent=''>
-        <Card bordered={false}  error={error}>
+        <Card bordered={false}  error={error} title={<span><Icon type="unordered-list" />会员充值记录列表</span>}>
           {renderClassifyFilter}
           <Table
             loading={loading}
             columns={tableColumns}
             rowKey={record => record.uuid}
             dataSource={listData}
-            // pagination={{"defaultPageSize":10, showQuickJumper: true }}
+            pagination={pagination}
+            onChange={this.handleTableChange}
             size="middle"
             expandedRowRender={record => <div><p>二维码ID：{record.qrcode_id}</p><br /><p>微信openid：{record.openid ? record.openid: <span>无</span> }</p></div>}
             components={this.components}
           />
-           <Pagination
+           {/* <Pagination
             showSizeChanger
             onShowSizeChange={this.onShowSizeChange}
             defaultPageSize={10}
             total={count}
             showTotal={() => ('共' + count + '条数据')}
-          />
+          /> */}
         </Card>
        
        </PageHeaderWrapper>
