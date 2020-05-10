@@ -6,12 +6,8 @@ import { urlencoded } from '@/utils/urlencoded';
 
 //  零食订单列表
 export async function SnacksOrderList(params) {
-    console.warn('sanck services ', params)
-    // if(isNull(params)) {
-    //     params.results = 10;
-    //     params.page = 1;
-    //   }
-    return request(`/snackstest/Snacks_Order/GetAll_Snacks_Order_Bypage?pages=${params.page}&number=${params.results}`, { method:'POST'});
+    
+    return request(`/snackstest/Snacks_Order/GetAll_Snacks_Order_Bypage?${stringify(params)}`, { method:'POST'});
 
 }
 

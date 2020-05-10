@@ -7,7 +7,6 @@ import request from '@/utils/request';
 //  缺货提醒或者零食推荐列表
 export async function RemindList() {
     return request('/snackstest/Advise/Get_All_Advise');
-
 }
 
 // 添加缺货提醒或零食推荐

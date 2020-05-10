@@ -15,7 +15,8 @@ export default {
   namespace: 'snackorder',
 
   state: {
-    showSnacksOrderList: {},
+    showSnacksOrderList: [],
+    QuerySnacksOrderData: [],
     QrcodeList: {},
     snackList: {},
     showIssue: {},
@@ -83,7 +84,6 @@ export default {
 
       // 根据宿舍号查询
       *fetchSnacksOrderBydormitory({ payload }, { call, put }) {
-       
         const response = yield call(services.GetSnacksOrderBydormitory, payload);
         if (!response) return;
         if (response === []) {
@@ -107,7 +107,7 @@ export default {
     },
     QuerySnacksOrderData(state, { payload }) {
       // console.warn('model reducers payload', payload);
-      return { ...state, showSnacksOrderList: payload }
+      return { ...state, QuerySnacksOrderData: payload }
     },
     QrcodeList(state, { payload }) {
       return {

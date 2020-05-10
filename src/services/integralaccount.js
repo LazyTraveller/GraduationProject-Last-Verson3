@@ -6,25 +6,24 @@ import request from '@/utils/request';
 
 //  积分会员列表
 export async function integralaccountList(params) {
-    // console.warn('integralaccountList3', params);
-    
-    return request(`/snackstest/Member/GetMemberListByPage?pages=${params.page}&number=${params.results}`, { method:'POST'});
+    console.warn('service params', params)
+    return request(`/snackstest/Member/GetMemberListByPage?${stringify(params)}`, { method:'POST'});
 }
 
 
-// //根据号码，微信昵称，查询
+// //根据号码查询
 export async function GetintegralaccountByNameorPlone(values) {
-    const body = _.pick(values, "phone","wechatName","page");
-    return request(`/snackstest/Member/GetMemberListByPage?number=10&${stringify(body)}`, { method:'POST'});
+    console.warn('sendValues', values)
+    // return request(`/snackstest/Member/GetMemberListByPage?number=10&${stringify(body)}`, { method:'POST'});
 }
 //会员充值记录
 export async function MemberRechargeList(params) {
 //    console.warn('MemberRechargeList3', params);
     
-    return request(`/snackstest/InvestMember/GetAllInvestMamberByPage?pages=${params.page}&number=${params.results}`, { method:'POST'});
+    return request(`/snackstest/InvestMember/GetAllInvestMamberByPage?${stringify(params)}`, { method:'POST'});
 }
 
-//根据号码，微信昵称，查询
+//根据号码查询
 export async function GetInvestMemberByNameorPlone(values) {
     console.warn('values', values)
     const body = _.pick(values, "phone","wechatName");

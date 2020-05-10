@@ -7,7 +7,6 @@ import request from '@/utils/request';
 //  二维码绑定列表
 export async function QrcodeList() {
     return request('/snackstest/Qrcode/GetAll_QrcodeListBypages');
-
 }
 
 // 添加二维码绑定
@@ -44,7 +43,6 @@ export async function searchQrcodeByUUID(uuid) {
 
 // 提交编辑好的信息
 export async function QrcodeEdit(values) {
-   
     const body = _.pick(values, "uuid","dormitory","leftmoney", "summoney");
     return request(`/snackstest/Qrcode/Update_Qrcode?${stringify(body)}`, { method: "POST"})
 }

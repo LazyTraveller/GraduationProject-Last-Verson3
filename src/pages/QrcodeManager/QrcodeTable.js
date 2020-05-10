@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Icon, Popconfirm } from 'antd';
 import moment from 'moment';
 import EditQrcode from './modals/EditQrcode';
-import EditQrcode1 from './modals/EditQrcode1'
+import Replenish from './modals/Replenish';
 
 export const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 export const DATE_FORMAT = 'YYYY-MM-DD';
@@ -26,7 +26,7 @@ function newColumn(title, dataIndex, render = undefined ) {
 }
 
 export default function getQrcodeColumns(props,eventHandler) {
-     const { onMarkqrcode,getEditQrcode,clearError,onEditSubmit, onEditQrcode} = eventHandler;
+     const { onMarkqrcode,getEditQrcode,clearError,onEditSubmit, onReplenishSubmit} = eventHandler;
     const isDeal = {
         false: "已处理",
         true: "未处理",
@@ -87,17 +87,6 @@ export default function getQrcodeColumns(props,eventHandler) {
             render: it => {
                 return(
                   <Fragment>
-                  
-                    {/* <EditQrcode1 
-                      onShowAsync={clearError}
-                      onOk={onEditSubmit}
-                    >
-                      <a 
-                        style={{ marginLeft: 10 }} 
-                        onClick={getEditQrcode.bind(this, _.get(it,'uuid',''))} >
-                        <Icon type="rocket" />&nbsp;&nbsp;补货
-                      </a>
-                    </EditQrcode1> */}
                     <EditQrcode 
                       onShowAsync={clearError}
                       onOk={onEditSubmit}
@@ -108,6 +97,16 @@ export default function getQrcodeColumns(props,eventHandler) {
                         <Icon type="edit" />&nbsp;编辑&nbsp;&nbsp;
                       </a>
                     </EditQrcode>
+                    <Replenish 
+                      onShowAsync={clearError}
+                      onOk={onReplenishSubmit}
+                    >
+                      <a 
+                        style={{ marginLeft: 20 }} 
+                        onClick={getEditQrcode.bind(this, _.get(it,'uuid',''))} >
+                        <Icon type="edit" />&nbsp;补货&nbsp;&nbsp;
+                      </a>
+                    </Replenish>
                     {
                       it.status === false ? (
                         <a

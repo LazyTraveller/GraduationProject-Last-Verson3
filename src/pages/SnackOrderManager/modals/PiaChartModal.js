@@ -33,7 +33,7 @@ export default class PiaChartModal extends React.PureComponent {
 
   render() {
     const { loadingPieChart, pieChartData, dormitory, showSnacksOrderList } = this.props;
-    // console.warn("showSnacksOrderList",showSnacksOrderList);
+    console.warn("showSnacksOrderList=====",showSnacksOrderList);
     let sumMoney = 0; 
     showSnacksOrderList.map(it => {
       sumMoney +=_.get(it, 'money');

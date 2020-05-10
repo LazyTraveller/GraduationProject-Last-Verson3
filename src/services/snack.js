@@ -11,9 +11,6 @@ export async function SnackList() {
 
 // 添加零食
 export async function SnackAdd(values) {
-   
-    const body = _.pick(values, 'name', 'money','images', 'classify_uuid');
-    
     return request(`/snackstest/Goods/Add_Goods`,{ method:'POST',data: {values}});
 }
 

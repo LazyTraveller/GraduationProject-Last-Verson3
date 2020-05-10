@@ -160,17 +160,29 @@ class AddSnacks extends Component{
                   name: 'name',rules: [
                     newRequiredRule('零食名称不为空'),
                     newMaxLenRule(255, `零食名称`),
+                    { pattern: /\+=\x/g, message: '禁止输入+x=字符'}
                   ]
                 })}
               </Form.Item>
             </Col>
-            <Col lg={6} md={12} sm={24}>
+            {/* <Col lg={6} md={12} sm={24}>
               <Form.Item label="零食价格">
                 {form.input({
                   name: 'money',rules: [
                     newRequiredRule('零食价格不为空'),
                   ]
                 })}
+              </Form.Item>
+            </Col> */}
+            <Col lg={6} md={12} sm={24}>
+              <Form.Item label="零食价格">
+                {getFieldDecorator('money', {
+                    rules: [
+                      newRequiredRule(`零食价格不允许为空`),
+                    ],
+                  })(
+                    <Input placeholder="请输入你的内容" size="large" type="number" />
+                  )}
               </Form.Item>
             </Col>
             <Col lg={6} md={12} sm={24}>

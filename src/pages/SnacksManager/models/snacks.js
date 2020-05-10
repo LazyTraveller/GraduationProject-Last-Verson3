@@ -101,7 +101,6 @@ export default {
       if (response.code !== 200) {
         message.success('添加成功');
         easyRouteTo(this, defaultGoBack.router);
-       
       } else {
         message.error('上架失败');
       }

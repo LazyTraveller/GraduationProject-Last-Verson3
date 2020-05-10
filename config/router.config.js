@@ -161,20 +161,20 @@ export default [
          
         ],
       },
-      {
-        name: 'integralgoods',
-        icon: 'gift',
-        path: '/integralgoods',
-        routes: [
-          //积分商品管理
-          {
-            path: '/integralgoods/goods',
-            name: 'goods',
-            component: './Profile/BasicProfile'
-          },
+      // {
+      //   name: 'integralgoods',
+      //   icon: 'gift',
+      //   path: '/integralgoods',
+      //   routes: [
+      //     //积分商品管理
+      //     {
+      //       path: '/integralgoods/goods',
+      //       name: 'goods',
+      //       component: './Profile/BasicProfile'
+      //     },
          
-        ],
-      },
+      //   ],
+      // },
       //管理员信息
       {
         name: 'account',

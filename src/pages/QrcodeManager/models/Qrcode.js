@@ -76,7 +76,6 @@ export default {
 
     // 提交修改后的信息
     *fetchQrcodeEdit({ payload }, { call }) {
-     
       const response = yield call(services.QrcodeEdit, payload);
       if (!response) return;
       if (response.code !== 200) {

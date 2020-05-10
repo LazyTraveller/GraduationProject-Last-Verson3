@@ -68,6 +68,28 @@ class QrcodeManager extends Component {
   onEditSubmit(values) {
     const { dispatch } = this.props;
     const sendValues = Object.assign({}, values);
+    console.warn('sendValues', sendValues);
+    dispatch({
+      type: 'qrcode/fetchQrcodeEdit',
+      payload: { ...sendValues },
+    });
+    this.query();
+    this.query();
+  }
+
+  onReplenishSubmit(values) {
+    const { dispatch, qrcode } = this.props;
+    const gotEditQrcode = Object.assign({}, qrcode.gotEditQrcode);
+    
+    console.warn('values', values);
+    const sendValues = {};
+    sendValues.uuid = gotEditQrcode.uuid;
+    sendValues.qrcode_id = gotEditQrcode.qrcode_id;
+    sendValues.dormitory = gotEditQrcode.dormitory;
+    sendValues.status = gotEditQrcode.status;
+    sendValues.summoney = parseInt(gotEditQrcode.leftmoney, 10)+parseInt(values.replenish, 10);
+    sendValues.leftmoney = parseInt(gotEditQrcode.leftmoney, 10)+parseInt(values.replenish, 10);
+    console.warn('sendValues', sendValues);
 
     dispatch({
       type: 'qrcode/fetchQrcodeEdit',
@@ -185,6 +207,7 @@ class QrcodeManager extends Component {
         clearError: this.clearError.bind(this),
         GetqrcodeEdit: this.GetqrcodeEdit.bind(this),
         getEditQrcode: this.getEditQrcode.bind(this),
+        onReplenishSubmit: this.onReplenishSubmit.bind(this)
       }
     );
 
@@ -285,6 +308,7 @@ class QrcodeManager extends Component {
           size="middle"
           components={this.components}
           scroll={{ x: 1650 }}
+          // bordered
         />
       </Card>
       // </PageHeaderWrapper>

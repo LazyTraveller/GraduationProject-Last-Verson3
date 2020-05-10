@@ -40,16 +40,14 @@ class IntegralAccount extends Component{
     const { form, dispatch } = this.props;
     form.validateFields((err, fieldsValues) => {
       if (err) return;
-      if (fieldsValues.address === undefined) {
-        this.query();
-      }
+      this.query({ phone: fieldsValues.phone, wechatName: fieldsValues.wechatName })
       this.setState({
         formValues: { ...fieldsValues },
       });
-      dispatch({
-        type: 'IntegralAccount/Queryintegralaccount',
-        payload: { ...fieldsValues }
-      });
+      // dispatch({
+      //   type: 'IntegralAccount/Queryintegralaccount',
+      //   payload: { ...fieldsValues }
+      // });
     }); 
   }
 
@@ -61,8 +59,10 @@ class IntegralAccount extends Component{
   query(params = {}) {
     this.clearError();
     const { dispatch } = this.props;
-    if (Object.keys(params).length === 0) {
-      params.results = 10;
+    if (params.hasOwnProperty('number') === false) {
+      params.number = 10;
+    }
+    if (params.hasOwnProperty('page') === false) {
       params.page = 1;
     }
     dispatch({
@@ -80,12 +80,12 @@ class IntegralAccount extends Component{
       pagination: pager
     });
     this.query({
-      results: pagination.pageSize,
+      number: pagination.pageSize,
       page: pagination.current,
       sortField: sorter.field,
       sorterOrder: sorter.order,
       ...filter
-    });
+    });  
   }
 
   render() {
@@ -130,12 +130,21 @@ class IntegralAccount extends Component{
       <Form onSubmit={this.handleSearch} layout='horizontal' style={{ marginBottom: 30}}>
         <Row gutter={16}>
           <Col md={6} sm={24}>
-            <Form.Item label="宿舍号筛选">
-              {form.getFieldDecorator('address', {
+            <Form.Item label="会员电话筛选">
+              {form.getFieldDecorator('phone', {
                 rules: [
-                  { message: '请输入需要查询的宿舍号'}
+                  { message: '请输入需要查询的会员电话'}
                 ]
-              })(<Input placeholder="宿舍号关键字" />)}
+              })(<Input placeholder="填写会员电话" />)}
+            </Form.Item>
+          </Col>
+          <Col md={6} sm={24}>
+            <Form.Item label="微信名称筛选">
+              {form.getFieldDecorator('wechatName', {
+                rules: [
+                  { message: '请输入需要查询的微信名称'}
+                ]
+              })(<Input placeholder="微信名称关键字" />)}
             </Form.Item>
           </Col>
           {submitText}

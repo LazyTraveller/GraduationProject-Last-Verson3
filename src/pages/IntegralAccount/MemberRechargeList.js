@@ -53,16 +53,14 @@ class MemberRechargeList extends Component{
     form.validateFields((err, fieldsValues) => {
       console.warn('fieldsValues', fieldsValues)
       if (err) return;
-      // if (fieldsValues.address === undefined) {
-      //   this.query();
-      // }
+      this.query({ phone: fieldsValues.phone, wechatName: fieldsValues.wechatName })
       this.setState({
         formValues: { ...fieldsValues },
       });
-      dispatch({
-        type: 'IntegralAccount/fetchInvestMember',
-        payload: { ...fieldsValues }
-      });
+      // dispatch({
+      //   type: 'IntegralAccount/fetchInvestMember',
+      //   payload: { ...fieldsValues }
+      // });
     }); 
   }
 
@@ -75,8 +73,10 @@ class MemberRechargeList extends Component{
     // console.warn('MemberRechargeList', params)
     this.clearError();
     const { dispatch } = this.props;
-    if (Object.keys(params).length === 0) {
-      params.results = 10;
+    if (params.hasOwnProperty('number') === false) {
+      params.number = 10;
+    }
+    if (params.hasOwnProperty('page') === false) {
       params.page = 1;
     }
     dispatch({
@@ -94,8 +94,8 @@ class MemberRechargeList extends Component{
       pagination: pager
     });
     this.query({
-      results: pagination.pageSize,
-      page: pagination.current,
+      number: pagination.pageSize,
+      pages: pagination.current,
       sortField: sorter.field,
       sorterOrder: sorter.order,
       ...filter

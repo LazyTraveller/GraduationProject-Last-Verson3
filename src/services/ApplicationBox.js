@@ -7,7 +7,6 @@ import request from '@/utils/request';
 //  申请盒子列表
 export async function ApplyList() {
     return request('/snackstest/Apply_box/GetAllApplyboxList');
-
 }
 
 // 添加申请盒子

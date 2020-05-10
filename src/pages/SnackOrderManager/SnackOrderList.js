@@ -43,8 +43,8 @@ function getCount(arr) {
 
 @connect(({ snackorder, loading }) => ({
     snackorder, // 这里要改
-  isSaving: loading.effects['snackorder/fetchIssueList'],// 这里要改
-  loadingPieChart: loading.effects['snackorder/fetchIssueList'],
+  isSaving: loading.effects['snackorder/fetchSnacksOrderList'],// 这里要改
+  loadingPieChart: loading.effects['snackorder/fetchSnacksOrderList'],
   loading: loading.models.snackorder,
 }))
 @Form.create()
@@ -92,21 +92,14 @@ class SnackOrderList extends Component{
 
   handleSearch = e => {
      e.preventDefault();
-    const { dispatch, form } = this.props;
+    const { form } = this.props;
     form.validateFields((err, fieldsValue) => {
       if (err) return;
-      if (fieldsValue.dormitory === undefined) {
-        this.query();
-      }
+      this.query({ dormitory: fieldsValue.dormitory })
       this.setState({
         formValues: { ...fieldsValue }
       });
-    
      
-      dispatch({
-        type: 'snackorder/fetchSnacksOrderBydormitory',
-        payload: {...fieldsValue },
-      })
     })
   }
 
@@ -114,10 +107,11 @@ class SnackOrderList extends Component{
     const { dispatch, form } = this.props;
     form.validateFields((err, fieldsValue) => {
       if (err) return;
-      console.warn(fieldsValue.dormitory)
+      // console.warn(fieldsValue.dormitory)
       if (fieldsValue.dormitory === undefined) {
         this.query();
       }
+     
       this.setState({
         formValues: { ...fieldsValue },
         dormitory: fieldsValue.dormitory,
@@ -147,8 +141,10 @@ class SnackOrderList extends Component{
     console.warn('param', params)
     this.clearError();
     const { dispatch } = this.props;
-    if (Object.keys(params).length === 0) {
-      params.results = 10;
+    if (params.hasOwnProperty('number') === false) {
+      params.number = 10;
+    }
+    if (params.hasOwnProperty('page') === false) {
       params.page = 1;
     }
     dispatch({
@@ -166,7 +162,7 @@ class SnackOrderList extends Component{
       pagination: pager
     });
     this.query({
-      results: pagination.pageSize,
+      number: pagination.pageSize,
       page: pagination.current,
       sortField: sorter.field,
       sorterOrder: sorter.order,
@@ -178,12 +174,14 @@ class SnackOrderList extends Component{
   render() {
     const {loading ,snackorder, isSaving, form } = this.props;
     const { error, dormitory, pagination } = this.state;
+    // const { showSnacksOrderList, QuerySnacksOrderData } = snackorder;
     const showSnacksOrderList = Array.isArray(snackorder.showSnacksOrderList) > 0 ? snackorder.showSnacksOrderList : [];
+    const querySnacksOrderData = snackorder.QuerySnacksOrderData;
     let count = _.get(showSnacksOrderList[0], 'count');
     if(count === 0) {
       count = showSnacksOrderList.length
     }
-    console.warn('count', count)
+    console.warn('QuerySnacksOrderData111111', showSnacksOrderList)
     pagination.total = count;
 
     const getSancks = [];
@@ -260,7 +258,7 @@ class SnackOrderList extends Component{
         <Button type="primary" htmlType="submit" style={{ marginRight: 20}}>查询</Button>
         <Button onClick={e =>{ e.preventDefault(); this.resetSeatch();}}>重置</Button>
         <Button style={{ marginLeft: 10 }} onClick={this.requery}>刷新</Button>&nbsp;&nbsp;&nbsp;
-        <PiaChartModal onQueryChartData={this.onQueryChartData} dormitory={dormitory} pieChartData={pieChartData} showSnacksOrderList={showSnacksOrderList}/>
+        <PiaChartModal onQueryChartData={this.onQueryChartData} dormitory={dormitory} pieChartData={pieChartData} showSnacksOrderList={querySnacksOrderData} />
 
       </Col>
     );
