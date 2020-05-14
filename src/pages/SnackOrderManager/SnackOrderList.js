@@ -55,6 +55,7 @@ class SnackOrderList extends Component{
       error: '',
       formValues: {},
       pagination: {},
+      filter: {}
     }
   }
 
@@ -97,7 +98,10 @@ class SnackOrderList extends Component{
       if (err) return;
       this.query({ dormitory: fieldsValue.dormitory })
       this.setState({
-        formValues: { ...fieldsValue }
+        formValues: { ...fieldsValue },
+        filter: {
+          dormitory: fieldsValue.dormitory
+        }
       });
      
     })
@@ -155,8 +159,9 @@ class SnackOrderList extends Component{
 
   clearError() { this.setState({ error: '' }); }
 
-  handleTableChange = (pagination, filter, sorter) => {
+  handleTableChange = (pagination) => {
     const pager = { ...this.state.pagination };
+    const { filter } = this.state;
     pager.current = pagination.current;
     this.setState({
       pagination: pager
@@ -164,8 +169,6 @@ class SnackOrderList extends Component{
     this.query({
       number: pagination.pageSize,
       page: pagination.current,
-      sortField: sorter.field,
-      sorterOrder: sorter.order,
       ...filter
     });
   }

@@ -20,6 +20,7 @@ class MemberRechargeList extends Component{
       error: '',
       formValues: {},
       pagination: {},
+      filter: {}
     }
   }
 
@@ -56,6 +57,10 @@ class MemberRechargeList extends Component{
       this.query({ phone: fieldsValues.phone, wechatName: fieldsValues.wechatName })
       this.setState({
         formValues: { ...fieldsValues },
+        filter: {
+          phone: fieldsValues.phone, 
+          wechatName: fieldsValues.wechatName
+        }
       });
       // dispatch({
       //   type: 'IntegralAccount/fetchInvestMember',
@@ -87,17 +92,16 @@ class MemberRechargeList extends Component{
 
   clearError() { this.setState({ error: ''})}
 
-  handleTableChange = (pagination, filter, sorter) => {
+  handleTableChange = (pagination) => {
     const pager = { ...this.state.pagination };
+    const { filter } = this.state;
     pager.current = pagination.current;
     this.setState({
       pagination: pager
     });
     this.query({
       number: pagination.pageSize,
-      pages: pagination.current,
-      sortField: sorter.field,
-      sorterOrder: sorter.order,
+      page: pagination.current,
       ...filter
     });
   }

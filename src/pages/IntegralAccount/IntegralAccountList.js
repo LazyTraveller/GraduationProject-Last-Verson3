@@ -20,6 +20,7 @@ class IntegralAccount extends Component{
       error: '',
       formValues: {},
       pagination: {},
+      filter: {}
     }
   }
 
@@ -43,6 +44,11 @@ class IntegralAccount extends Component{
       this.query({ phone: fieldsValues.phone, wechatName: fieldsValues.wechatName })
       this.setState({
         formValues: { ...fieldsValues },
+        filter: {
+          phone: fieldsValues.phone, 
+          wechatName: fieldsValues.wechatName
+        }
+
       });
       // dispatch({
       //   type: 'IntegralAccount/Queryintegralaccount',
@@ -73,8 +79,9 @@ class IntegralAccount extends Component{
 
   clearError() { this.setState({ error: ''})}
 
-  handleTableChange = (pagination, filter, sorter) => {
+  handleTableChange = (pagination) => {
     const pager = { ...this.state.pagination };
+    const { filter } = this.state;
     pager.current = pagination.current;
     this.setState({
       pagination: pager
@@ -82,8 +89,6 @@ class IntegralAccount extends Component{
     this.query({
       number: pagination.pageSize,
       page: pagination.current,
-      sortField: sorter.field,
-      sorterOrder: sorter.order,
       ...filter
     });  
   }

@@ -31,7 +31,7 @@ function getApplyColumns(props, eventHandler) {
     }
     return [
         newColumn('所属区域', 'adminUserid'),
-        newColumn('微信昵称', 'wechaName'),
+        newColumn('微信昵称', 'wechatName'),
         newColumn('会员电话', 'phone'),
         newColumn('充值金额', 'money'),
        {

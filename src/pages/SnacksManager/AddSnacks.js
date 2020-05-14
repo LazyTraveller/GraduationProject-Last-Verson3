@@ -160,7 +160,7 @@ class AddSnacks extends Component{
                   name: 'name',rules: [
                     newRequiredRule('零食名称不为空'),
                     newMaxLenRule(255, `零食名称`),
-                    { pattern: /\+=\x/g, message: '禁止输入+x=字符'}
+                    // { pattern: /\+=\x/g, message: '禁止输入+x=字符'}
                   ]
                 })}
               </Form.Item>
